@@ -42,16 +42,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClickDector.cs" />
+    <Compile Include="GestureDetector\ClickDector.cs" />
     <Compile Include="Detector.cs" />
-    <Compile Include="DragDetector.cs" />
+    <Compile Include="GestureDetector\DragDetector.cs" />
     <Compile Include="FrameBuffer.cs" />
-    <Compile Include="GestureDetector.cs" />
-    <Compile Include="OneIndexDetector.cs" />
+    <Compile Include="GestureDetector\GestureDetector.cs" />
+    <Compile Include="GestureDetector\OneIndexDetector.cs" />
+    <Compile Include="GestureInfo\DragInfo.cs" />
+    <Compile Include="GestureInfo\GestureInfo.cs" />
+    <Compile Include="GestureInfo\OneIndexInfo.cs" />
+    <Compile Include="GestureInfo\TwoIndexInfo.cs" />
     <Compile Include="Point3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\FixedSizedQueue.cs" />
-    <Compile Include="TwoIndexDetector.cs" />
+    <Compile Include="GestureDetector\TwoIndexDetector.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,10 +7,10 @@ using GR.StructV2;
 
 namespace GR
 {
-    public class ClickDector : GestureDetector
-    {
-        public override void Detect(Frame frame)
-        {
-        }
-    }
+    //public class ClickDector : GestureDetector
+    //{
+    //    public override void Detect(Frame frame)
+    //    {
+    //    }
+    //}
 }

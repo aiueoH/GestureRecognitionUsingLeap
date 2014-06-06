@@ -34,9 +34,12 @@ namespace GR
             _gestureDetector.Add(_dragD);
             _gestureDetector.Add(_twoIndexD);
             _gestureDetector.Add(_oneIndexD);
-            AddDragListener(OnDrag);
-            AddTwoIndexListener(OnTwoIndex);
-            AddOneIndexListener(OnOneIndex);
+            //AddDragListener(OnDrag);
+            _dragD.OnUpdate += OnDrag;
+            _oneIndexD.OnUpdate += OnOneIndex;
+            _twoIndexD.OnUpdate += OnTwoIndex;
+            //AddTwoIndexListener(OnTwoIndex);
+            //AddOneIndexListener(OnOneIndex);
         }
 
         private void UpdateFrame()
@@ -58,6 +61,39 @@ namespace GR
                 return;
             foreach (GestureDetector gd in _gestureDetector)
                 gd.Detect(Frame);
+        }
+
+        private void OnDrag(object sender, EventArgs args)
+        {
+            DragInfo info = args as DragInfo;
+            if (info != null)
+            {
+                Console.WriteLine(String.Format("Drag :: state={0} x={1} y={2} z={3} dx={4} dy={5} dz={6} dis={7}",
+                    info.State, info.HandPos.X, info.HandPos.Y, info.HandPos.Z,
+                    info.DeltaPos.X, info.DeltaPos.Y, info.DeltaPos.Z,
+                    info.Distance));
+            }
+        }
+
+        private void OnOneIndex(object sender, EventArgs args)
+        {
+            OneIndexInfo info = args as OneIndexInfo;
+            if (info != null)
+            {
+                Console.WriteLine(String.Format("OneIndex :: state={0} x={1} y={2} z={3}", info.State, info.IndexPos.X, info.IndexPos.Y, info.IndexPos.Z));
+            }
+        }
+
+        private void OnTwoIndex(object sender, EventArgs args)
+        {
+            TwoIndexInfo info = args as TwoIndexInfo;
+            if (info != null)
+            {
+                if (info.State != GestureState.NULL)
+                    Console.WriteLine(String.Format("TwoIndex :: state={0} dDX={1} dDY={2} dDZ={3} dD={4}",
+                        info.State,
+                        info.DeltaDistanceXYZ.X, info.DeltaDistanceXYZ.Y, info.DeltaDistanceXYZ.Z, info.DeltaDistance));
+            }
         }
 
         private void OnDrag(GestureState state, Point3D handPos, float dX, float dY, float dZ, float distance)
@@ -82,19 +118,9 @@ namespace GR
                 Console.WriteLine(String.Format("OneIndex :: state={0} x={1} y={2} z={3}", state, indexPos.X, indexPos.Y, indexPos.Z));
         }
 
-        public void AddDragListener(DragDetector.OnUpdateDelegate listener)
-        {
-            _dragD.OnUpdateEvent += listener;
-        }
-
         public void AddTwoIndexListener(TwoIndexDetector.OnUpdateDelegate listener)
         {
             _twoIndexD.OnUpdateEvent += listener;
-        }
-
-        public void AddOneIndexListener(OneIndexDetector.OnUpdateDelegate listener)
-        {
-            _oneIndexD.OnUpdateEvent += listener;
         }
     }
 }
