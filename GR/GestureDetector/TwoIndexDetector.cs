@@ -10,14 +10,6 @@ namespace GR
 {
     public class TwoIndexDetector : GestureDetector
     {
-        public delegate void OnUpdateDelegate(
-            GestureState state, 
-            Point3D leftIndexPos, 
-            Point3D rightIndexPos, 
-            float dDX, 
-            float dDY, 
-            float dDZ, 
-            float dD);
         private enum HandState
         {
             INVALID,
@@ -30,8 +22,6 @@ namespace GR
         private Point3D _cLeft, _cRight;
         private float _bDX, _bDY, _bDZ, _bD;
         private float _dDX, _dDY, _dDZ, _dD;
-
-        public event OnUpdateDelegate OnUpdateEvent;
 
         public TwoIndexDetector()
         {
