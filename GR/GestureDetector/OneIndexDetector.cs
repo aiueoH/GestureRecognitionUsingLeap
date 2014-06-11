@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace GR
 {
@@ -72,7 +71,7 @@ namespace GR
                 State = GestureState.START;
             }
             else
-                throw new UHSTException();
+                throw new UnknowHandStateTranslateException();
         }
 
         protected override void OnStartState()
@@ -84,7 +83,7 @@ namespace GR
                 State = GestureState.STOP;
             }
             else
-                throw new UHSTException();
+                throw new UnknowHandStateTranslateException();
         }
 
         protected override void OnUpdateState()
@@ -96,7 +95,7 @@ namespace GR
                 State = GestureState.STOP;
             }
             else
-                throw new UHSTException();
+                throw new UnknowHandStateTranslateException();
         }
 
         protected override void OnStopState()

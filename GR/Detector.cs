@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using GR.StructV2;
 
 namespace GR
@@ -14,6 +13,7 @@ namespace GR
         private const int FRAME_BUFFER_SIZE = 5;
 
         private Leap.Controller _controller = new Leap.Controller();
+        private bool _isRunning = false;
         private Thread _updateThread = null;
         private FrameBuffer _frameBuffer = null;
         public Frame Frame { get { return _frameBuffer.Frame; } }
@@ -22,9 +22,10 @@ namespace GR
         private DragDetector _dragD = new DragDetector();
         private TwoIndexDetector _twoIndexD = new TwoIndexDetector();
         private OneIndexDetector _oneIndexD = new OneIndexDetector();
+        private ClickDetector _clickD = new ClickDetector();
 
-        public delegate void TTT(object sender, EventArgs info);
-        public event TTT OnUpdate;
+        public delegate void OnExceptionDelegate(Exception ex);
+        public event OnExceptionDelegate OnException;
 
         public Detector(int bufferSize = FRAME_BUFFER_SIZE)
         {
@@ -33,26 +34,47 @@ namespace GR
             _gestureDetector.Add(_dragD);
             _gestureDetector.Add(_twoIndexD);
             _gestureDetector.Add(_oneIndexD);
-
-            _updateThread = new Thread(QueryFrame);
-            _updateThread.Start();
+            _gestureDetector.Add(_clickD);
         }
 
-        public void Close()
+        public void Start()
         {
-            _updateThread.Abort();
+            if (!_isRunning)
+            {
+                _isRunning = true;
+                _updateThread = new Thread(QueryFrame);
+                _updateThread.Start();
+            }
+            else
+                throw new Exception("Detector is running!");
+        }
+
+        public void Stop()
+        {
+            _isRunning = false;
         }
 
         private void QueryFrame()
         {
             long id = long.MinValue;
-            while (true)
+            while (_isRunning)
             {
                 Leap.Frame f = _controller.Frame();
                 if (f.Id == id) continue;
                 _frameBuffer.Add(new Frame(f));
                 Detect();
                 id = f.Id;
+            }
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                if (OnException != null)
+                    OnException(ex);
+                else
+                    throw ex;
             }
         }
 
@@ -65,6 +87,12 @@ namespace GR
                     return;
                 }
             throw new Exception(String.Format("Can't find detector : {0}", detectorName));
+        }
+
+        public void Detect(Leap.Frame frame)
+        {
+            _frameBuffer.Add(new Frame(frame));
+            Detect();
         }
 
         private void Detect()

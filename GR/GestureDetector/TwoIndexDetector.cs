@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 using GR.StructV2;
 
@@ -119,7 +118,7 @@ namespace GR
             else if (_pHS == HandState.READY && _cHS == HandState.STRETCH)
                 State = GestureState.START;
             else
-                throw new UHSTException();
+                throw new UnknowHandStateTranslateException();
         }
 
         protected override void OnStartState()
@@ -131,7 +130,7 @@ namespace GR
                 (_pHS == HandState.STRETCH && _cHS == HandState.READY))
                 State = GestureState.STOP;
             else
-                throw new UHSTException();
+                throw new UnknowHandStateTranslateException();
         }
 
         protected override void OnUpdateState()
@@ -144,7 +143,7 @@ namespace GR
                 )
                 State = GestureState.STOP;
             else
-                throw new UHSTException();
+                throw new UnknowHandStateTranslateException();
         }
 
         protected override void OnStopState()

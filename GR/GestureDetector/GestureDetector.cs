@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using GR.StructV2;
 
 namespace GR
@@ -16,9 +15,9 @@ namespace GR
         STOP,
     }
 
-    public class UHSTException : Exception
+    public class UnknowHandStateTranslateException : Exception
     {
-        public UHSTException() : base ("Unknow hand state translate exception") {}
+        public UnknowHandStateTranslateException() : base ("Unknow hand state translate exception") {}
     }
 
     public abstract class GestureDetector

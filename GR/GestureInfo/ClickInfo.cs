@@ -5,8 +5,8 @@ using System.Text;
 
 namespace GR
 {
-    public class OneIndexInfo : GestureInfo
+    public class ClickInfo : GestureInfo
     {
-        public Point3D IndexPos { get; set; }
+        public Point3D StablePos { get; set; }
     }
 }

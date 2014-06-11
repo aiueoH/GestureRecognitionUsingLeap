@@ -22,6 +22,8 @@ namespace DataDisplay
             _detector.AddListener("DragDetector", OnDrag);
             _detector.AddListener("OneIndexDetector", OnOneIndex);
             _detector.AddListener("TwoIndexDetector", OnTwoIndex);
+            _detector.AddListener("ClickDetector", OnClick);
+            _detector.Start();
 
             Leap.Vector v = new Leap.Vector();
 
@@ -136,9 +138,22 @@ namespace DataDisplay
             }
         }
 
+        private void OnClick(object sender, EventArgs args)
+        {
+            ClickInfo info = args as ClickInfo;
+            if (info != null)
+            {
+                if (info.State != GestureState.NULL)
+                    Console.WriteLine(String.Format("Click :: state={0} X={1} Y={2} Z={3}",
+                        info.State,
+                        info.StablePos.X, info.StablePos.Y, info.StablePos.Z));
+            }
+        }
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _detector.Close();
+            //_detector.Close();
+            _detector.Stop();
         }
     }
 }
