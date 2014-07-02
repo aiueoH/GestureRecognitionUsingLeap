@@ -34,7 +34,8 @@ namespace GR
         private bool _isGoingToStable = false;
 
         private Vector _preIndexPos;
-        private Point3D _stablePos = new Point3D(0, 0, 0);
+        private Vector _stablePos = new Vector(0, 0, 0);
+        private Vector _stableDir = new Vector(0, 0, 0);
 
         public override void Init()
         {
@@ -47,7 +48,7 @@ namespace GR
             _cHS = HandState.INVALID;
             if (Frame.Hands.Count == 1 && Frame.Hands[0].IsOnlyIndexFingerStrait())
             {
-                Vector currentIndexPos = Frame.Hands[0].Index.TipPosition;
+                Vector currentIndexPos = Frame.Hands[0].Index.StabilizedTipPosition;
                 if (_preIndexPos != null)
                 {
                     // STABLE
@@ -81,7 +82,8 @@ namespace GR
         {
             ClickInfo info = new ClickInfo();
             info.State = State;
-            info.StablePos = new Point3D(_stablePos);
+            info.StablePos = new Vector(_stablePos);
+            info.StableDir = new Vector(_stableDir);
             Info = info;
         }
 
@@ -95,14 +97,14 @@ namespace GR
 
         protected override void OnStartState()
         {
+            _stablePos = new Vector(Frame.Hands[0].Index.TipPosition);
+            _stableDir = new Vector(Frame.Hands[0].Index.Direction);
+
             bool isTimeOut = _isAmbiguos && (Frame.Timestamp - _ambiguousTimeStamp) > AMBIGOUS_DURATION;
             _isAmbiguos = false;
+
             if (_cHS == HandState.DOWN)
-            {
                 State = GestureState.UPDATE;
-                Vector v = Frame.Hands[0].Index.TipPosition;
-                _stablePos = new Point3D(v.x, v.y, v.z);
-            }
             else if (
                 (_pHS == HandState.STABLE && _cHS == HandState.STABLE) ||
                 (_pHS == HandState.INVALID && _cHS == HandState.STABLE)
@@ -132,6 +134,7 @@ namespace GR
         {
             bool isTimeOut = _isAmbiguos && (Frame.Timestamp - _ambiguousTimeStamp) > AMBIGOUS_DURATION;
             _isAmbiguos = false;
+
             if (_pHS == HandState.DOWN && _cHS == HandState.DOWN)
                 State = GestureState.UPDATE;
             else if (

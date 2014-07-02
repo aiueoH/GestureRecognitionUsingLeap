@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using GR.StructV2;
+
 namespace GR
 {
     public class OneIndexDetector : GestureDetector
@@ -14,7 +16,8 @@ namespace GR
         }
         private HandState _cHS;
         private HandState _pHS;
-        private Point3D _indexPos;
+        private Vector _indexPos = new Vector(0, 0, 0);
+        private Vector _indexDir = new Vector(0, 0, 0);
         public OneIndexDetector()
         {
         }
@@ -24,7 +27,6 @@ namespace GR
             base.Init();
             _cHS = HandState.INVALID;
             _pHS = HandState.STRETCH;
-            _indexPos = new Point3D(0, 0, 0);
         }
 
         protected override void UpdateHandState()
@@ -41,7 +43,8 @@ namespace GR
             UpdateData();
             OneIndexInfo info = new OneIndexInfo();
             info.State = State;
-            info.IndexPos = new Point3D(_indexPos);
+            info.IndexPos = new Vector(_indexPos);
+            info.IndexDir = new Vector(_indexDir);
             Info = info;
         }
 
@@ -49,9 +52,12 @@ namespace GR
         {
             if (State == GestureState.START || State == GestureState.UPDATE)
             {
-                _indexPos.X = Frame.Hands[0].Index.TipPosition.x;
-                _indexPos.Y = Frame.Hands[0].Index.TipPosition.y;
-                _indexPos.Z = Frame.Hands[0].Index.TipPosition.z;
+                _indexPos.x = Frame.Hands[0].Index.StabilizedTipPosition.x;
+                _indexPos.y = Frame.Hands[0].Index.StabilizedTipPosition.y;
+                _indexPos.z = Frame.Hands[0].Index.StabilizedTipPosition.z;
+                _indexDir.x = Frame.Hands[0].Index.Direction.x;
+                _indexDir.y = Frame.Hands[0].Index.Direction.y;
+                _indexDir.z = Frame.Hands[0].Index.Direction.z;
             }
         }
 

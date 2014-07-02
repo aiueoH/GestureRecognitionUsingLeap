@@ -19,16 +19,37 @@ namespace DataDisplay
 
         public Form1()
         {
-            _detector.AddListener("DragDetector", OnDrag);
-            _detector.AddListener("OneIndexDetector", OnOneIndex);
-            _detector.AddListener("TwoIndexDetector", OnTwoIndex);
-            _detector.AddListener("ClickDetector", OnClick);
-            _detector.Start();
-
-            Leap.Vector v = new Leap.Vector();
-
             CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
+
+            //_detector.AddListener("DragDetector", OnDrag);
+            //_detector.AddListener("OneIndexDetector", OnOneIndex);
+            //_detector.AddListener("TwoIndexDetector", OnTwoIndex);
+            //_detector.AddListener("ClickDetector", OnClick);
+            _detector.Start();
+
+
+            new Thread(delegate()
+                {
+                    while (true)
+                    {
+                        Frame frame = _detector.Frame;
+                        if (frame == null)
+                            continue;
+                        Hand hand = frame.LeftHand;
+                        if (hand == null)
+                            continue;
+                        textBox01.Text = hand.Direction.x.ToString();
+                        textBox02.Text = hand.Direction.y.ToString();
+                        textBox03.Text = hand.Direction.z.ToString();
+
+                        textBox11.Text = hand.PalmNormal.x.ToString();
+                        textBox12.Text = hand.PalmNormal.y.ToString();
+                        textBox13.Text = hand.PalmNormal.z.ToString();
+
+                    }
+                }).Start();
+
             //new Thread(delegate()
             //    {
             //        while (true)
@@ -111,8 +132,8 @@ namespace DataDisplay
             if (info != null)
             {
                 Console.WriteLine(String.Format("Drag :: state={0} x={1} y={2} z={3} dx={4} dy={5} dz={6} dis={7}",
-                    info.State, info.HandPos.X, info.HandPos.Y, info.HandPos.Z,
-                    info.DeltaPos.X, info.DeltaPos.Y, info.DeltaPos.Z,
+                    info.State, info.HandPos.x, info.HandPos.y, info.HandPos.z,
+                    info.DeltaPos.x, info.DeltaPos.y, info.DeltaPos.z,
                     info.Distance));
             }
         }
@@ -122,7 +143,7 @@ namespace DataDisplay
             OneIndexInfo info = args as OneIndexInfo;
             if (info != null)
             {
-                Console.WriteLine(String.Format("OneIndex :: state={0} x={1} y={2} z={3}", info.State, info.IndexPos.X, info.IndexPos.Y, info.IndexPos.Z));
+                Console.WriteLine(String.Format("OneIndex :: state={0} x={1} y={2} z={3}", info.State, info.IndexPos.x, info.IndexPos.y, info.IndexPos.z));
             }
         }
 
@@ -134,7 +155,7 @@ namespace DataDisplay
                 if (info.State != GestureState.NULL)
                     Console.WriteLine(String.Format("TwoIndex :: state={0} dDX={1} dDY={2} dDZ={3} dD={4}",
                         info.State,
-                        info.DeltaDistanceXYZ.X, info.DeltaDistanceXYZ.Y, info.DeltaDistanceXYZ.Z, info.DeltaDistance));
+                        info.DeltaDistanceXYZ.x, info.DeltaDistanceXYZ.y, info.DeltaDistanceXYZ.z, info.DeltaDistance));
             }
         }
 
@@ -146,7 +167,7 @@ namespace DataDisplay
                 if (info.State != GestureState.NULL)
                     Console.WriteLine(String.Format("Click :: state={0} X={1} Y={2} Z={3}",
                         info.State,
-                        info.StablePos.X, info.StablePos.Y, info.StablePos.Z));
+                        info.StablePos.x, info.StablePos.y, info.StablePos.z));
             }
         }
 

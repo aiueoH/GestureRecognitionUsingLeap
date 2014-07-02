@@ -18,8 +18,8 @@ namespace GR
 
         private HandState _cHS; // current Drag State
         private HandState _pHS; // pre  Drag State
-        private Point3D _bHP; // begine Hand Position
-        private Point3D _cHP; // current Hand Position
+        private Vector _bHP; // begine Hand Position
+        private Vector _cHP; // current Hand Position
         private float _dX, _dY, _dZ, _distance;
 
         public DragDetector()
@@ -31,8 +31,8 @@ namespace GR
             base.Init();
             _cHS = HandState.INVALID;
             _pHS = HandState.INVALID;
-            _bHP = new Point3D(0, 0, 0);
-            _cHP = new Point3D(0, 0, 0);
+            _bHP = new Vector(0, 0, 0);
+            _cHP = new Vector(0, 0, 0);
             _dX = 0;
             _dY = 0;
             _dZ = 0;
@@ -49,8 +49,8 @@ namespace GR
             UpdateData();
             DragInfo info = new DragInfo();
             info.State = State;
-            info.HandPos = new Point3D(_cHP);
-            info.DeltaPos = new Point3D(_dX, _dY, _dZ);
+            info.HandPos = new Vector(_cHP);
+            info.DeltaPos = new Vector(_dX, _dY, _dZ);
             info.Distance = _distance;
             Info = info;
         }
@@ -71,21 +71,21 @@ namespace GR
         {
             if (State == GestureState.START)
             {
-                Vector v = Frame.Hands[0].PalmPosition;
-                _bHP.X = v.x;
-                _bHP.Y = v.y;
-                _bHP.Z = v.z;
+                Vector v = Frame.Hands[0].StabilizedPalmPosition;
+                _bHP.x = v.x;
+                _bHP.y = v.y;
+                _bHP.z = v.z;
             }
             if (State != GestureState.NULL && State != GestureState.STOP)
             {
-                Vector v = Frame.Hands[0].PalmPosition;
-                _cHP.X = v.x;
-                _cHP.Y = v.y;
-                _cHP.Z = v.z;
+                Vector v = Frame.Hands[0].StabilizedPalmPosition;
+                _cHP.x = v.x;
+                _cHP.y = v.y;
+                _cHP.z = v.z;
             }
-            _dX = _cHP.X - _bHP.X;
-            _dY = _cHP.Y - _bHP.Y;
-            _dZ = _cHP.Z - _bHP.Z;
+            _dX = _cHP.x - _bHP.x;
+            _dY = _cHP.y - _bHP.y;
+            _dZ = _cHP.z - _bHP.z;
             _distance = _cHP.DistanceTo(_bHP);
         }
 

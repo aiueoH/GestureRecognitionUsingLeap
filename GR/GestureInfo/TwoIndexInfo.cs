@@ -7,9 +7,9 @@ namespace GR
 {
     public class TwoIndexInfo : GestureInfo
     {
-        public Point3D LeftPos { get; set; }
-        public Point3D RightPos { get; set; }
-        public Point3D DeltaDistanceXYZ { get; set; }
+        public GR.StructV2.Vector LeftPos { get; set; }
+        public GR.StructV2.Vector RightPos { get; set; }
+        public GR.StructV2.Vector DeltaDistanceXYZ { get; set; }
         public float DeltaDistance { get; set; }
     }
 }

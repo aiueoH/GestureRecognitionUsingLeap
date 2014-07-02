@@ -7,6 +7,7 @@ namespace GR
 {
     public class ClickInfo : GestureInfo
     {
-        public Point3D StablePos { get; set; }
+        public GR.StructV2.Vector StablePos { get; set; }
+        public GR.StructV2.Vector StableDir { get; set; }
     }
 }

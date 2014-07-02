@@ -17,8 +17,8 @@ namespace GR
         }
         private HandState _cHS;
         private HandState _pHS;
-        private Point3D _bLeft, _bRight;
-        private Point3D _cLeft, _cRight;
+        private Vector _bLeft, _bRight;
+        private Vector _cLeft, _cRight;
         private float _bDX, _bDY, _bDZ, _bD;
         private float _dDX, _dDY, _dDZ, _dD;
 
@@ -31,10 +31,10 @@ namespace GR
             base.Init();
             _cHS = HandState.INVALID;
             _pHS = HandState.INVALID;
-            _bLeft = new Point3D(0, 0, 0);
-            _bRight = new Point3D(0, 0, 0);
-            _cLeft = new Point3D(0, 0, 0);
-            _cRight = new Point3D(0, 0, 0);
+            _bLeft = new Vector(0, 0, 0);
+            _bRight = new Vector(0, 0, 0);
+            _cLeft = new Vector(0, 0, 0);
+            _cRight = new Vector(0, 0, 0);
             _bDX = 0;
             _bDY = 0;
             _bDZ = 0;
@@ -66,9 +66,9 @@ namespace GR
             UpdateData();
             TwoIndexInfo info = new TwoIndexInfo();
             info.State = State;
-            info.LeftPos = new Point3D(_cLeft);
-            info.RightPos = new Point3D(_cRight);
-            info.DeltaDistanceXYZ = new Point3D(_dDX, _dDY, _dDZ);
+            info.LeftPos = new Vector(_cLeft);
+            info.RightPos = new Vector(_cRight);
+            info.DeltaDistanceXYZ = new Vector(_dDX, _dDY, _dDZ);
             info.DeltaDistance = _dD;
             Info = info;
         }
@@ -79,9 +79,9 @@ namespace GR
             {
                 SetIndexPos(Frame.LeftHand, _bLeft);
                 SetIndexPos(Frame.RightHand, _bRight);
-                _bDX = Math.Abs(_bLeft.X - _bRight.X);
-                _bDY = Math.Abs(_bLeft.Y - _bRight.Y);
-                _bDZ = Math.Abs(_bLeft.Z - _bRight.Z);
+                _bDX = Math.Abs(_bLeft.x - _bRight.x);
+                _bDY = Math.Abs(_bLeft.y - _bRight.y);
+                _bDZ = Math.Abs(_bLeft.z - _bRight.z);
                 _bD = _bLeft.DistanceTo(_bRight);
             }
             if (State == GestureState.START || State == GestureState.UPDATE)
@@ -89,18 +89,18 @@ namespace GR
                 SetIndexPos(Frame.LeftHand, _cLeft);
                 SetIndexPos(Frame.RightHand, _cRight);
             }
-            _dDX = Math.Abs(_cLeft.X - _cRight.X) - _bDX;
-            _dDY = Math.Abs(_cLeft.Y - _cRight.Y) - _bDY;
-            _dDZ = Math.Abs(_cLeft.Z - _cRight.Z) - _bDZ;
+            _dDX = Math.Abs(_cLeft.x - _cRight.x) - _bDX;
+            _dDY = Math.Abs(_cLeft.y - _cRight.y) - _bDY;
+            _dDZ = Math.Abs(_cLeft.z - _cRight.z) - _bDZ;
             _dD = _cLeft.DistanceTo(_cRight) - _bD;
         }
 
-        private void SetIndexPos(Hand hand, Point3D index)
+        private void SetIndexPos(Hand hand, Vector index)
         {
-            Vector v = hand.Index.TipPosition;
-            index.X = v.x;
-            index.Y = v.y;
-            index.Z = v.z;
+            Vector v = hand.Index.StabilizedTipPosition;
+            index.x = v.x;
+            index.y = v.y;
+            index.z = v.z;
         }
 
         protected override void OnNullState()

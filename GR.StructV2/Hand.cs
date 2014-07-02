@@ -15,8 +15,16 @@ namespace GR.StructV2
         public Frame Frame { get; set; }
         public List<Pointable> Pointables { get; set; }
         public List<Finger> Fingers { get; set; }
+        public Finger GetFinger(int index)
+        {
+            foreach (Finger f in Fingers)
+                if ((int)f.Type == index)
+                    return f;
+            return null;
+        }
         public List<Tool> Tools { get; set; }
         public int Id { get; set; }
+        public float PalmWidth { get; set; }
         public Vector PalmPosition { get; set; }
         public Vector PalmVelocity { get; set; }
         public Vector SphereCenter { get; set; }
@@ -43,6 +51,7 @@ namespace GR.StructV2
             IsTraveled = false;
             Frame = frame;
             Id = hand.Id;
+            PalmWidth = hand.PalmWidth;
             IsLeft = hand.IsLeft;
             IsRight = hand.IsRight;
             Pointables = new List<Pointable>();
@@ -99,6 +108,7 @@ namespace GR.StructV2
 
             Frame = frame;
             Id = hand.Id;
+            PalmWidth = hand.PalmWidth;
             Pointables = new List<Pointable>();
             Fingers = new List<Finger>();
             Tools = new List<Tool>();
@@ -155,36 +165,29 @@ namespace GR.StructV2
             return null;
         }
 
-        private List<Finger> SortByXDesc(List<Finger> fingers)
+        public Matrix GetAlignAxisRotationMatrix()
         {
-            List<Finger> result = new List<Finger>();
-            List<Finger> tmp = new List<Finger>(fingers);
-            while (tmp.Count > 0)
-            {
-                Finger candidate = tmp.First();
-                foreach (Finger f in tmp)
-                    if (candidate.TipPosition.x < f.TipPosition.x)
-                        candidate = f;
-                result.Add(candidate);
-                tmp.Remove(candidate);
-            }
-            return result;
-        }
-
-        private List<Finger> SortByXAsc(List<Finger> fingers)
-        {
-            List<Finger> result = new List<Finger>();
-            List<Finger> tmp = new List<Finger>(fingers);
-            while (tmp.Count > 0)
-            {
-                Finger candidate = tmp.First();
-                foreach (Finger f in tmp)
-                    if (candidate.TipPosition.x > f.TipPosition.x)
-                        candidate = f;
-                result.Add(candidate);
-                tmp.Remove(candidate);
-            }
-            return result;
+            Matrix m = new Matrix(0f);
+            Vector forward = new Vector(Direction);
+            Vector up = -new Vector(PalmNormal);
+            float angle;
+            // 找出手掌forward與世界forwar的兩夾角，並產生旋轉矩陣
+            angle = new Vector(0f, forward.y, forward.z).AngleTo(Vector.Forward);
+            if (forward.y < 0)
+                angle = -angle;
+            m = Matrix.RotationX(angle);
+            forward = m * forward;
+            angle = new Vector(forward.x, 0f, forward.z).AngleTo(Vector.Forward);
+            if (forward.x > 0)
+                angle = -angle;
+            m = m * Matrix.RotationY(angle);
+            // 找出手掌up與世界up的夾角，並產生旋轉矩陣
+            up = m * up;
+            angle = new Vector(up.x, up.y, 0f).AngleTo(Vector.Up);
+            if (up.x > 0)
+                angle = -angle;
+            m = m * Matrix.RotationZ(angle);
+            return m;
         }
     }
 }

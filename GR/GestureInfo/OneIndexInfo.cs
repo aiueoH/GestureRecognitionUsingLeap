@@ -7,6 +7,7 @@ namespace GR
 {
     public class OneIndexInfo : GestureInfo
     {
-        public Point3D IndexPos { get; set; }
+        public GR.StructV2.Vector IndexPos { get; set; }
+        public GR.StructV2.Vector IndexDir { get; set; }
     }
 }

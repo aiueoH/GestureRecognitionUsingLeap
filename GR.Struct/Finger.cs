@@ -11,7 +11,6 @@ namespace GR.Struct
         public Finger(Leap.Finger finger, Frame frame, Hand hand)
             : base(finger, frame, hand)
         {
-
         }
 
         public Finger(Finger finger, Frame frame, Hand hand)

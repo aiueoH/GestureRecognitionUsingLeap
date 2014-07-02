@@ -18,7 +18,28 @@ namespace GR.StructV2
         public float MagnitudeSquared { get; set; }
         //public Vector Normalized { get; set; }
 
+        /// <summary>
+        /// 1, 0, 0
+        /// </summary>
+        public static Vector Right { get { return new Vector(1f, 0f, 0f); } }
+        /// <summary>
+        /// 0, 1, 0
+        /// </summary>
+        public static Vector Up { get { return new Vector(0f, 1f, 0f); } }
+        /// <summary>
+        /// 0, 0, -1
+        /// </summary>
+        public static Vector Forward { get { return new Vector(0f, 0f, -1f); } }
+
         private Vector() {}
+
+        public Vector(float x, float y, float z)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            Magnitude = ComputMagnitude();
+        }
 
         public Vector(Leap.Vector vector)
         {
@@ -52,15 +73,59 @@ namespace GR.StructV2
             v.z -= vector.z;
             return v;
         }
-
-        public float DistanceTo(Vector vector)
+        
+        public static Vector operator +(Vector a, Vector b)
         {
-            return (float)Math.Sqrt(Math.Pow(x - vector.x, 2) + Math.Pow(y - vector.y, 2) + Math.Pow(z - vector.z, 2)) / 100f;
+            return new Vector(a.x + b.x, a.y + b.y, a.z + b.z);
         }
 
-        public float XDistanceTo(Vector vector)
+        public static Vector operator -(Vector a, Vector b)
         {
-            return (float)Math.Abs(x - vector.x);
+            return new Vector(a.x - b.x, a.y - b.y, a.z - b.z);
+        }
+
+        public static Vector operator -(Vector v)
+        {
+            return new Vector(-v.x, -v.y, -v.z);
+        }
+
+        public float ComputMagnitude()
+        {
+            return (float)Math.Sqrt(x * x + y * y + z * z);
+        }
+
+        public Vector Normalize()
+        {
+            return new Vector(x / Magnitude, y / Magnitude, z / Magnitude);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns>degree</returns>
+        public float AngleTo(Vector v)
+        {
+            float dot = Normalize().Dot(v.Normalize());
+            if (dot > 1f &&
+                dot - 1f < 0.00001f)
+                dot = 1f;
+            return (float)Math.Acos(dot);
+        }
+
+        public float Dot(Vector v)
+        {
+            return x * v.x + y * v.y + z * v.z;
+        }
+
+        public float DistanceTo(Vector v)
+        {
+            return (float)Math.Sqrt(Math.Pow(x - v.x, 2) + Math.Pow(y - v.y, 2) + Math.Pow(z - v.z, 2)) / 100f;
+        }
+
+        public float XDistanceTo(Vector v)
+        {
+            return (float)Math.Abs(x - v.x);
         }
     }
 }

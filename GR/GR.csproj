@@ -42,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clip.cs" />
+    <Compile Include="Motion\HandFeatures.cs" />
     <Compile Include="GestureDetector\ClickDetector.cs" />
     <Compile Include="Detector.cs" />
     <Compile Include="GestureDetector\DragDetector.cs" />
@@ -53,6 +55,9 @@
     <Compile Include="GestureInfo\GestureInfo.cs" />
     <Compile Include="GestureInfo\OneIndexInfo.cs" />
     <Compile Include="GestureInfo\TwoIndexInfo.cs" />
+    <Compile Include="Motion\MDManager.cs" />
+    <Compile Include="Motion\MotionDetector.cs" />
+    <Compile Include="Motion\MotionMatching.cs" />
     <Compile Include="Point3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\FixedSizedQueue.cs" />
@@ -64,10 +69,6 @@
       <Project>{e013c6f9-eef3-4a61-b19a-0ef1249d043b}</Project>
       <Name>GR.StructV2</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram2.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

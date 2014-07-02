@@ -7,8 +7,8 @@ namespace GR
 {
     public class DragInfo : GestureInfo
     {
-        public Point3D HandPos { get; set; }
-        public Point3D DeltaPos {get; set; }
+        public GR.StructV2.Vector HandPos { get; set; }
+        public GR.StructV2.Vector DeltaPos { get; set; }
         public float Distance {get; set; }
     }
 }

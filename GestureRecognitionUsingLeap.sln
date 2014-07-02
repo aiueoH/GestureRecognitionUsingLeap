@@ -9,6 +9,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GR.StructV2", "GR.StructV2\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataDisplay", "DataDisplay\DataDisplay.csproj", "{4C9E915D-CC9A-4343-9855-16DD6B084FFD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPotter", "RPotter\RPotter.csproj", "{B7DCF9EA-E7D2-4D1D-9DB1-390D8857629D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tmpMotionRecognition", "tmpMotionRecognition\tmpMotionRecognition.csproj", "{55140CDD-036B-4EA2-89D3-B23B9CFE43C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tmpFeaturesTest", "tmpFeaturesTest\tmpFeaturesTest.csproj", "{AEC4BE9E-2570-4A75-91D1-26E7EE4E5E78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GR.FramePlayer", "GR.FramePlayer\GR.FramePlayer.csproj", "{A41DEB2B-68F6-4184-8DF5-6BA45AF017D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tmpMotionRecognitionUsingKeyFrame", "tmpMotionRecognitionUsingKeyFrame\tmpMotionRecognitionUsingKeyFrame.csproj", "{F9143018-C42D-4C99-8281-2A528CBE9D95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +41,26 @@ Global
 		{4C9E915D-CC9A-4343-9855-16DD6B084FFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C9E915D-CC9A-4343-9855-16DD6B084FFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C9E915D-CC9A-4343-9855-16DD6B084FFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7DCF9EA-E7D2-4D1D-9DB1-390D8857629D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7DCF9EA-E7D2-4D1D-9DB1-390D8857629D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7DCF9EA-E7D2-4D1D-9DB1-390D8857629D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7DCF9EA-E7D2-4D1D-9DB1-390D8857629D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55140CDD-036B-4EA2-89D3-B23B9CFE43C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55140CDD-036B-4EA2-89D3-B23B9CFE43C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55140CDD-036B-4EA2-89D3-B23B9CFE43C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55140CDD-036B-4EA2-89D3-B23B9CFE43C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEC4BE9E-2570-4A75-91D1-26E7EE4E5E78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEC4BE9E-2570-4A75-91D1-26E7EE4E5E78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEC4BE9E-2570-4A75-91D1-26E7EE4E5E78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEC4BE9E-2570-4A75-91D1-26E7EE4E5E78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A41DEB2B-68F6-4184-8DF5-6BA45AF017D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A41DEB2B-68F6-4184-8DF5-6BA45AF017D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A41DEB2B-68F6-4184-8DF5-6BA45AF017D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A41DEB2B-68F6-4184-8DF5-6BA45AF017D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9143018-C42D-4C99-8281-2A528CBE9D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9143018-C42D-4C99-8281-2A528CBE9D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9143018-C42D-4C99-8281-2A528CBE9D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9143018-C42D-4C99-8281-2A528CBE9D95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
